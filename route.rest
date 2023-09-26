@@ -1,23 +1,24 @@
 ###
-GET http://localhost/api_back
-###
-POST http://localhost/api_back/
-
-{
-    "pseudo":"test",
-    "password":"passer",
-    "firstname":"diokel",
-    "lastname":"mic",
-    "action":"login"
-}
+GET http://localhost/api_back/getuserlist/
 ###
 POST http://localhost/api_back/
 
 {
     "pseudo":"diokel",
     "password":"passer",
+    "action":"login"
+}
+###
+POST http://localhost/api_back/
+
+{
+    "pseudo":"test",
+    "firstname":"diokel",
+    "lastname":"mic",
+     "password":"passer",
     "action":"register"
 }
+
 ###
 POST http://localhost/api_back/
 

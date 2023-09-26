@@ -1,17 +1,20 @@
 <?php
+header("Access-Control-Allow-Origin: *");
 require_once "functions.php";
-if ($_SERVER["REQUEST_METHOD"] == "GET"){
-    // echo json_encode([
-    //     "status"=>200,
-    //     "message"=>"ok",
-    // ]);
-}else{
-    // echo json_encode([
-    //     "test"=>"ok"
-    // ]);
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    
+    $url=$_SERVER['REQUEST_URI'];
+    $url=trim($url, "\/");
+    $url=explode("/",$url);
+    $action=$url[1];
+    if($action== "getuserlist"){
+        getListUser();
+    }
+} else {
+   
 
     // ce que l'utilisateur envoi via un formulaire on recupere 
-    $data=json_decode(file_get_contents("php://input"),true);
+    $data = json_decode(file_get_contents("php://input"), true);
 
     if ($data["action"] == "login") {
         // appel de la fonction login
@@ -21,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET"){
         register($data['firstname'], $data['lastname'], $data['pseudo'], $data['password']);
     } else if ($data["action"] == "send message") {
         // appel de la fonction sendMessage
-        sendMessage($data['expeditor'],$data['receiver'],$data['message']);
+        sendMessage($data['expeditor'], $data['receiver'], $data['message']);
     } else {
         echo json_encode([
             "satus"     => 404,
@@ -35,9 +38,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET"){
     //     "date"=>$data
 
     // ]);
-    
-   // on fait appel a la fonction register pour enregistrer le user
 
-  
+    // on fait appel a la fonction register pour enregistrer le user
+
+
 
 }

@@ -91,27 +91,29 @@ function sendMessage($expeditor,$receiver,$message){
         ]);
     }
 
-    function getListUser()
-    {
-        // se connecter
-        $db = dbConnect();
-        $request = $db->prepare("SELECT *FROM user");
-        try {
-            $request->execute();
-            //   recupere la liste
-            $listeUsers =  $request->fetchAll(PDO::FETCH_ASSOC);
+   
+}
 
-            echo json_encode([
-                "status" => 200,
-                "message" => "voici la liste des utilisateurs",
-                "data" => $listUsers
-            ]);
-        } catch (PDOException $e) {
-            echo json_encode([
-                "status" => 500,
-                "message" => $e->getMessage()
+function getListUser()
+{
+    // se connecter
+    $db = dbConnect();
+    $request = $db->prepare("SELECT *FROM users");
+    try {
+        $request->execute();
+        //   recupere la liste
+        $listUsers =  $request->fetchAll(PDO::FETCH_ASSOC);
 
-            ]);
-        }
+        echo json_encode([
+            "status" => 200,
+            "message" => "voici la liste des utilisateurs",
+            "data" => $listUsers
+        ]);
+    } catch (PDOException $e) {
+        echo json_encode([
+            "status" => 500,
+            "message" => $e->getMessage()
+
+        ]);
     }
 }
