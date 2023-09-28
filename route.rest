@@ -23,8 +23,13 @@ POST http://localhost/api_back/
 POST http://localhost/api_back/
 
 {
-    "expeditor":5,
-    "receiver":7,
-    "message":"contenu du message",
+    "expeditor":7,
+    "receiver":5,
+    "message":"ca va et toi",
     "action":"send message"
 }
+###
+
+ 
+
+GET  http://localhost/api_back/geListMessage/5/7

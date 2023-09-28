@@ -9,6 +9,13 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $action=$url[1];
     if($action== "getuserlist"){
         getListUser();
+    }elseif($action == "geListMessage"){
+        getListMessage($url[2], $url[3]);
+    }else{
+        echo json_encode([
+            "satus"     => 404,
+            "message"   => "service not found"
+        ]);
     }
 } else {
    
@@ -31,16 +38,5 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             "message"   => "service not found"
         ]);
     }
-
-    // echo json_encode([
-    //     "status"=>200,
-    //     "message"=>"ok",
-    //     "date"=>$data
-
-    // ]);
-
-    // on fait appel a la fonction register pour enregistrer le user
-
-
 
 }

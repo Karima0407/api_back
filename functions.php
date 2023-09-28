@@ -58,7 +58,7 @@ function login ($pseudo,$password){
                 echo json_encode([
                     "status" =>200,
                     "message" =>"felicitation...",
-                    "data" => $user
+                    "userInfo" => $user
                 ]);
             }else{
                 echo json_encode([
@@ -84,10 +84,14 @@ function sendMessage($expeditor,$receiver,$message){
     // executer la requete
     try{
         $request->execute(array($message,$expeditor,$receiver));
+        echo json_encode([
+            "status" => 201,
+            "message" => "your message is safely sent.."
+        ]);
     }catch(PDOException $e){
         echo json_encode([
-            "status" =>201,
-            "message" =>"your message is safely sent.."
+            "status" =>500,
+            "message" => $e->getMessage()
         ]);
     }
 
@@ -107,7 +111,7 @@ function getListUser()
         echo json_encode([
             "status" => 200,
             "message" => "voici la liste des utilisateurs",
-            "data" => $listUsers
+            "users" => $listUsers
         ]);
     } catch (PDOException $e) {
         echo json_encode([
@@ -116,4 +120,48 @@ function getListUser()
 
         ]);
     }
+}
+
+
+
+function getListMessage ($expeditor, $receiver){
+
+    $db = dbConnect();
+
+    $request = $db->prepare("SELECT *FROM messages WHERE expeditor_id = ? AND receiver_id=? OR expeditor_id = ? AND receiver_id = ?");
+
+    try {
+
+     $request->execute(array($expeditor, $receiver, $receiver,$expeditor));
+
+     $messages = $request->fetchAll(PDO::FETCH_ASSOC);
+
+        echo json_encode([
+
+            "status"=>200,
+
+            "message"=>"voici la liste de votrre discution",
+
+            "listMessage"=>$messages
+
+           
+
+        ]);
+
+ 
+
+    } catch (PDOException  $e) {
+
+       echo json_encode([
+
+            "status"=>500,
+
+            "message"=>$e->getMessage()
+
+           
+
+        ]);
+
+    }
+
 }
