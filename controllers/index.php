@@ -1,6 +1,13 @@
 <?php
 header("Access-Control-Allow-Origin: *");
-require_once "functions.php";
+echo json_encode([
+
+    "status" => 200,
+
+    'message' => "ok"
+
+]);
+require_once "userController.php";
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     
     $url=$_SERVER['REQUEST_URI'];
@@ -8,9 +15,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $url=explode("/",$url);
     $action=$url[1];
     if($action== "getuserlist"){
-        getListUser();
+       UserController:: loadModel($action);
     }elseif($action == "geListMessage"){
-        getListMessage($url[2], $url[3]);
+        UserController:: loadModel($action,[$url[1], $url[2]]);
     }else{
         echo json_encode([
             "satus"     => 404,
@@ -25,18 +32,19 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
     if ($data["action"] == "login") {
         // appel de la fonction login
-        login($data['pseudo'], $data['password']);
+      UserController::loadModel($data['action'],[$data['pseudo'], $data['password']]);
     } else if ($data["action"] == "register") {
         // on fait appel a la fonction register pour enregistrer le user
-        register($data['firstname'], $data['lastname'], $data['pseudo'], $data['password']);
+       UserController::loadModel($data['action'],[$data['firstname'], $data['lastname'], $data['pseudo'], $data['password']]);
     } else if ($data["action"] == "send message") {
         // appel de la fonction sendMessage
-        sendMessage($data['expeditor'], $data['receiver'], $data['message']);
+      UserController::loadModel($data['expeditor'], [$data['receiver'], $data['message']]);
     } else {
         echo json_encode([
             "satus"     => 404,
             "message"   => "service not found"
         ]);
     }
+   
 
 }
